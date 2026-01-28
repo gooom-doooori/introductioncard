@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>자기소개표 제작기</title>
+    <link rel="stylesheet" href="style.css?v=001">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="main-title">
+                <h2>MAIN TWEET</h2>
+            </div>
+            <div class="introductioncard">
+                <div class="profile-section">
+                    <div class="profile-img">
+                        <input type="file" id="profile-img" accept="image/*">
+                    </div>
+                    <div class="profile-contents">
+                        <div class="name"><input type="text" id="name" placeholder="여기에 닉네임 작성" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </div>
+                        <div class="age">
+                            <h3>나이</h3>
+                            <div class="btns">
+                            <button class="unselctbtn" id="adult">성인</button>
+                            <button class="unselctbtn" id="teen">청소년</button>
+                            <button class="unselctbtn" id="hiding">비공개</button>
+                            </div>
+                        </div>
+                        <div class="breakup">
+                            <h3>이별</h3>
+                            <div class="btns">
+                            <button class="unselctbtn" id="unblock-unfollow">블언블</button>
+                            <button class="unselctbtn" id="unfollow">언팔</button>
+                            <button class="unselctbtn" id="block">블락</button>
+                            </div>
+                        </div>
+                        <div class="ability">
+                            <h3>성향</h3>
+                            <div class="btns">
+                            <button class="unselctbtn" id="writing">글</button>
+                            <button class="unselctbtn" id="painting">그림</button>
+                            <button class="unselctbtn" id="story">썰</button>
+                            <button class="unselctbtn" id="DIY">공예</button>
+                            <button class="unselctbtn" id="design">디자인</button>
+                            <button class="unselctbtn" id="life">일상</button>
+                            <button class="unselctbtn" id="buy">소비</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="genre-section">
+                    <div class="genre-img">
+                        <div class="genre-info">
+                            <input type="text" class="genre-title" placeholder="제목" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            <input type="text" class="genre-content" placeholder="상세설명" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        </div>
+                        <input type="file" class="genre-file-input" accept="image/*">
+                    </div>
+                </div>
+                <div class="ect-section">
+                    <h3>기타</h3>
+                    <textarea id="ECT" placeholder="이곳에 자기소개 작성" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="control">
+            <div class="color-picker-wrapper">
+                <label for="bg-color">배경색:</label>
+                <input type="color" id="bg-color" value="#ffffff">
+            </div>
+            <button class="addgenre" id="addgenre">장르 추가</button>
+            <button class="savebtn" id="savebtn">이미지로 저장</button>
+        </div>
+    </div>
+    
+    <!-- Image Crop Modal -->
+    <div class="crop-modal" id="cropModal">
+        <div class="crop-container">
+            <div class="crop-preview" id="cropPreview"></div>
+            <div class="crop-controls">
+                <button class="crop-confirm" id="cropConfirm">완료</button>
+                <button class="crop-cancel" id="cropCancel">취소</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
