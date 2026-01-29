@@ -1,6 +1,7 @@
 // 전역 변수
 let currentCropper = null;
 let currentTarget = null;
+let imageCounter = 1;
 
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButtons = document.querySelectorAll('.unselctbtn');
@@ -376,10 +377,11 @@ document.addEventListener('DOMContentLoaded', function() {
             canvas.toBlob(function(blob) {
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
-                link.download = '성향표_' + new Date().getTime() + '.png';
+                link.download = '껍질-미리깐-메인트-' + imageCounter + '.png';
                 link.href = url;
                 link.click();
                 URL.revokeObjectURL(url);
+                imageCounter++;
             });
         } catch (error) {
             console.error('이미지 저장 중 오류:', error);
