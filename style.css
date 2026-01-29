@@ -224,7 +224,7 @@ h3, label{
     outline: none;
 }
 
-#name, #ECT{
+#name, #ECT, #ng{
     background: transparent;
     border: none;
     color: var(--unselect-text-color, inherit);
@@ -720,3 +720,4 @@ h3, label{
         flex-wrap: wrap;
     }
 }
+
