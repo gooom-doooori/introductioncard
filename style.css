@@ -97,6 +97,8 @@ body {
 .main-title {
     text-align: center;
     margin-bottom: 30px;
+    white-space: nowrap;
+    word-break: keep-all;
 }
 
 h2 {
@@ -302,13 +304,16 @@ h2::after {
 
 /* 5개: 첫째줄 3컬럼, 둘째줄 2컬럼 */
 .genre-section:has(.genre-img:nth-child(5):last-child) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
-.genre-section:has(.genre-img:nth-child(5):last-child) .genre-img:nth-child(4) {
-    grid-column: 1 / 2;
+.genre-section:has(.genre-img:nth-child(5):last-child) .genre-img:nth-child(1),
+.genre-section:has(.genre-img:nth-child(5):last-child) .genre-img:nth-child(2),
+.genre-section:has(.genre-img:nth-child(5):last-child) .genre-img:nth-child(3) {
+    grid-column: span 2;
 }
+.genre-section:has(.genre-img:nth-child(5):last-child) .genre-img:nth-child(4),
 .genre-section:has(.genre-img:nth-child(5):last-child) .genre-img:nth-child(5) {
-    grid-column: 2 / 4;
+    grid-column: span 3;
 }
 
 /* 7개: 첫째줄 3컬럼, 둘째줄 3컬럼, 셋째줄 컬럼 안나눔 */
@@ -319,25 +324,49 @@ h2::after {
     grid-column: 1 / -1;
 }
 
-/* 8개: 첫째줄 3컬럼, 둘째줄 3컬럼, 셋째줄 2컬럼 */
+/* 8개: 첫째줄 3컬럼, 둘째줄 3컬럼, 셋째줄 2컬럼 (반반) */
 .genre-section:has(.genre-img:nth-child(8):last-child) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
-.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(7) {
-    grid-column: 1 / 2;
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(1),
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(2),
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(3),
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(4),
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(5),
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(6) {
+    grid-column: span 2;
 }
+.genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(7),
 .genre-section:has(.genre-img:nth-child(8):last-child) .genre-img:nth-child(8) {
-    grid-column: 2 / 4;
+    grid-column: span 3;
 }
 
 @media (max-width: 900px) {
     .genre-section {
         grid-template-columns: repeat(2, 1fr) !important;
     }
+    
+    /* 1개일 때: 분할 안됨 */
+    .genre-section:has(.genre-img:nth-child(1):last-child) .genre-img {
+        grid-column: 1 / -1 !important;
+    }
+    
+    /* 2개일 때: 한 줄에 두 개 */
+    .genre-section:has(.genre-img:nth-child(2):last-child) .genre-img {
+        grid-column: span 1 !important;
+    }
+    
+    /* 3개 이상일 때: 홀수번째 줄 마지막은 분할 안됨 */
+    .genre-section .genre-img:nth-child(odd):last-child {
+        grid-column: 1 / -1 !important;
+    }
+    
+    /* 짝수 개일 때는 모두 2컬럼 */
     .genre-section .genre-img {
-        grid-column: auto !important;
+        grid-column: span 1 !important;
     }
 }
+
 .genre-img {
     height: 300px;
     border-radius: 2rem;
@@ -611,6 +640,14 @@ h2::after {
 
 
 @media (max-width: 768px) {
+    .main-title, h2{
+        font-size: 30pt;
+    }
+
+    h2::after{
+        font-size: 30.3pt;
+    }
+
     .profile-section {
         flex-direction: column;
         align-items: center;
@@ -639,12 +676,33 @@ h2::after {
     .profile-contents h3 {
         justify-content: center;
     }
+    .genre-img{
+        height: 180px;
+    }
+    .genre-info{
+        padding: 5px;
+        gap: 0;
+    }
+
+    .genre-info .genre-title{
+        font-size: 12pt;
+    }
+
+    .genre-info .genre-content{
+        font-size: 9pt;
+    }
+
+    .genre-info input{
+        line-height: 0.5;
+        margin-bottom: 0;
+    }
     
     .name {
         padding: 5px 0px 0px 0px;
     }
     
     #name {
+        width: 100%;
         text-align: center;
     }
     
