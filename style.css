@@ -123,7 +123,7 @@ h2::after {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -648,6 +648,10 @@ h3, label{
 
 
 @media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+    
     .main-title, h2{
         font-size: 30pt;
     }
@@ -693,15 +697,15 @@ h3, label{
     }
 
     .genre-info .genre-title{
-        font-size: 12pt;
+        font-size: 11pt !important;
     }
 
     .genre-info .genre-content{
-        font-size: 9pt;
+        font-size: 9pt !important;
     }
 
     .genre-info input{
-        line-height: 0.5;
+        line-height: 1;
         margin-bottom: 0;
     }
     
@@ -720,4 +724,3 @@ h3, label{
         flex-wrap: wrap;
     }
 }
-
