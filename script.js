@@ -88,6 +88,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return `rgb(${newRgb.r}, ${newRgb.g}, ${newRgb.b})`;
     }
 
+    function adjustColor(hex, lightnessChange, saturationChange) {
+        const rgb = hexToRgb(hex);
+        if (!rgb) return hex;
+        
+        const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+        hsl.l = Math.max(0, Math.min(100, hsl.l + lightnessChange));
+        hsl.s = Math.max(0, Math.min(100, hsl.s + saturationChange));
+        
+        const newRgb = hslToRgb(hsl.h, hsl.s, hsl.l);
+        return `rgb(${newRgb.r}, ${newRgb.g}, ${newRgb.b})`;
+    }
+
     // 배경색 변경 기능
     const bgColorPicker = document.getElementById('bg-color');
     const body = document.body;
@@ -97,25 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
         body.style.backgroundColor = selectedColor;
         
         // 명도를 60% 낮춘 색상으로 h3색상 변경
-        const darkerColor60 = darkenColor(selectedColor, 40);
+        const darkerColor60 = adjustColor(selectedColor, -40, -20);
         
         // 명도를 40% 낮춘 색상으로 버튼과 닉네임과 그림자 색상 변경
-        const darkerColor40 = darkenColor(selectedColor, 30);
-        
-        // 명도를 20% 낮춘 색상 (투명도 50%)
-        const rgb20 = hexToRgb(darkenColor(selectedColor, 20));
-        const darkerColor20Transparent = rgb20 ? `rgba(${rgb20.r}, ${rgb20.g}, ${rgb20.b}, 0.5)` : 'rgba(102, 102, 102, 0.5)';
+        const darkerColor40 = adjustColor(selectedColor,  -20, -30);
         
         // h3에 적용
         document.querySelectorAll('h3').forEach(el => {
             el.style.color = darkerColor60;
         });
+
+        // 명도를 높인 색상으로 이미지 배경색 변경
+        const lighterColor = adjustColor(selectedColor, 10, -10); // 명도 30% 증가, 채도 10% 감소
+        document.querySelectorAll('.profile-img, .genre-img').forEach(el => {
+            el.style.backgroundColor = lighterColor;
+        });
         
-        // h2 그림자에 적용 (투명도 50%)
-        document.documentElement.style.setProperty('--text-shadow-color-transparent', darkerColor20Transparent);
-        
-        // 닉네임 플레이스홀더에 적용 (투명도 50%)
-        document.documentElement.style.setProperty('--placeholder-color', darkerColor20Transparent);
+        // h2 그림자에 적용
+        const shadowColor = adjustColor(selectedColor, -50, -30);
+        document.documentElement.style.setProperty('--text-shadow-color', shadowColor)
+
+        // 닉네임과 ECT 플레이스홀더에 적용 - 동적 스타일 태그로 적용
+        const darkerColor20 = adjustColor(selectedColor, -20, -20);
+        document.documentElement.style.setProperty('--placeholder-color', darkerColor20);
         
         // 버튼과 닉네임에 적용
         document.documentElement.style.setProperty('--unselect-text-color', darkerColor40);
@@ -149,6 +165,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         genreSection.appendChild(newGenreImg);
         genreCount++;
+    });
+
+
+    // 장르 삭제 기능
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-btn')) {
+            e.target.closest('.genre-img').remove();
+            genreCount--;
+        }
     });
 
     // Cropper.js 라이브러리 로드 함수
@@ -272,11 +297,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // control 숨김
         const control = document.querySelector('.control');
+        const card = document.querySelector('.card');
         control.style.display = 'none';
         
         try {
-            const canvas = await html2canvas(document.body, {
-                backgroundColor: window.getComputedStyle(document.body).backgroundColor,
+            // card에 50px 패딩 추가
+            const wrapper = document.createElement('div');
+            wrapper.style.padding = '50px';
+            wrapper.style.backgroundColor = window.getComputedStyle(document.body).backgroundColor;
+            wrapper.style.backgroundImage = window.getComputedStyle(document.body).backgroundImage;
+            wrapper.style.backgroundSize = 'cover';
+            wrapper.style.backgroundPosition = 'center';
+            wrapper.style.display = 'inline-block';
+            
+            const cardClone = card.cloneNode(true);
+            wrapper.appendChild(cardClone);
+            document.body.appendChild(wrapper);
+            
+            const canvas = await html2canvas(wrapper, {
+                backgroundColor: null,
                 scale: 2,
                 logging: false,
                 useCORS: true,
@@ -284,15 +323,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 foreignObjectRendering: false,
                 imageTimeout: 0,
                 onclone: (clonedDoc) => {
-                    // 클론된 문서의 모든 input 요소에 line-height 강제 적용
-                    const inputs = clonedDoc.querySelectorAll('input[type="text"]');
+                    // 모든 input과 textarea의 값을 div로 변환
+                    const inputs = clonedDoc.querySelectorAll('input[type="text"], textarea');
                     inputs.forEach(input => {
-                        input.style.lineHeight = '1.5';
-                        input.style.padding = '8px 12px';
-                        input.style.height = 'auto';
+                        // 값이 없으면 빈 div로 만들기 (placeholder 숨김)
+                        if (!input.value) {
+                            const div = clonedDoc.createElement('div');
+                            div.style.display = 'none';
+                            input.parentNode.replaceChild(div, input);
+                            return;
+                        }
+                        
+                        const div = clonedDoc.createElement('div');
+                        div.textContent = input.value;
+                        
+                        // 원본 input의 계산된 스타일 가져오기
+                        const computedStyle = window.getComputedStyle(input);
+                        
+                        // 중요한 스타일만 복사
+                        div.style.fontSize = computedStyle.fontSize;
+                        div.style.fontWeight = computedStyle.fontWeight;
+                        div.style.fontFamily = computedStyle.fontFamily;
+                        div.style.color = computedStyle.color;
+                        div.style.padding = computedStyle.padding;
+                        div.style.margin = computedStyle.margin;
+                        div.style.lineHeight = computedStyle.lineHeight;
+                        div.style.textAlign = computedStyle.textAlign;
+                        div.style.border = computedStyle.border;
+                        div.style.borderRadius = computedStyle.borderRadius;
+                        div.style.backgroundColor = computedStyle.backgroundColor;
+                        div.style.width = computedStyle.width;
+                        div.style.overflow = 'visible';
+                        div.style.whiteSpace = 'pre-wrap';
+                        div.style.wordBreak = 'break-word';
+                        
+                        input.parentNode.replaceChild(div, input);
                     });
                 }
             });
+            
+            // wrapper 제거
+            document.body.removeChild(wrapper);
             
             // 이미지로 변환하여 다운로드
             canvas.toBlob(function(blob) {
@@ -311,4 +382,13 @@ document.addEventListener('DOMContentLoaded', function() {
             control.style.display = 'flex';
         }
     });
+
+    // textarea 자동 높이 조절
+    const textarea = document.getElementById('ECT');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    }
 });
