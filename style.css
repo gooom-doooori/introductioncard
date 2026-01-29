@@ -211,7 +211,7 @@ h2::after {
     overflow: visible;
     height: auto;
 }
-#name:focus, #ECT:focus{
+#name:focus, #ECT:focus, #ng:focus{
     outline: none;
 }
 
@@ -222,7 +222,7 @@ h2::after {
     opacity: 1;
 }
 
-#name::placeholder, #ECT::placeholder {
+#name::placeholder, #ECT::placeholder, #ng::placeholder {
     color: var(--placeholder-color, rgb(102, 102, 102));
     opacity: 0.5;
 }
@@ -235,7 +235,7 @@ h2::after {
     background-color: #fff;
     color: var(--unselect-text-color, #666);
     cursor: pointer;
-    font-size: 13px;
+    font-size: 15px;
     transition: all 0.3s ease;
 }
 
@@ -247,6 +247,24 @@ h2::after {
     background-color: var(--selected-bg-color);
     color: #fff;
     border: 1px solid var(--unselect-border-color, #5e84b6);
+}
+
+.upload-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.profile-img.has-image .upload-placeholder,
+.genre-img.has-image .upload-placeholder {
+    display: none;
 }
 
 /* 장르 섹션 */
@@ -424,11 +442,42 @@ h2::after {
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* 지뢰 섹션 */
+.ng-section {
+    display: flex;
+    padding: 0 0.5rem;
+    gap: 0px;
+    flex-direction: column;
+}
+
+.buttons{
+    padding: 10px 0 0 0;
+}
+
+.ng-section p {
+    padding-left: 3rem;
+    min-width: 80px;
+    font-weight: bold;
+    color: #333;
+}
+
+.ng-section textarea {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    line-height: 1.5;
+    min-height: 25px;
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+}
+
 /* 기타 섹션 */
 .ect-section {
     display: flex;
-    padding: 0 0.5rem;
-    gap: 10px;
+    padding: 10px 0.5rem;
+    gap: 0px;
     flex-direction: column;
 }
 
@@ -439,21 +488,11 @@ h2::after {
     color: #333;
 }
 
-.ect-section input[type="text"] {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    line-height: 1.5;
-    min-height: 40px;
-    resize: vertical;
-}
 .ect-section textarea {
     padding: 8px 12px;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.5;
     min-height: 150px;
     width: 100%;
