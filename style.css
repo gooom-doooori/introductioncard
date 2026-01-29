@@ -77,6 +77,10 @@
 :root {
     --selected-bg-color: #666;
     --selected-border-color: #666;
+    --text-shadow-color-transparent: rgba(82, 82, 82, 0.65);
+    --placeholder-color: rgba(102, 102, 102, 0.5);
+    --unselect-text-color: #666;
+    --unselect-border-color: #ddd;
 }
 
 body {
@@ -100,7 +104,20 @@ h2 {
     font-size: 40pt;
     font-weight: bold;
     color: #ffffff;
-    text-shadow: 5px 4px 1px var(--text-shadow-color-transparent, rgba(82, 82, 82, 0.65));
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: attr(data-text);
+    font-size: 40.3pt;
+    position: absolute;
+    left: 0px;
+    top: 3px;
+    color: var(--text-shadow-color, rgb(82, 82, 82));
+    opacity: 0.65;
+    z-index: -1;
+    white-space: nowrap;
 }
 
 .container {
@@ -122,19 +139,8 @@ h2 {
     gap: 20px;
     margin-bottom: 30px;
     padding-bottom: 30px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--selected-bg-color);
     position: relative;
-}
-
-.profile-section::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--selected-bg-color);
-    opacity: 0.5;
 }
 
 .profile-img {
@@ -164,7 +170,7 @@ h2 {
     gap: 10px;
 }
 
-.profile-contents > div {
+.ability, .age, .breakup {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -185,7 +191,6 @@ h2 {
     line-height: 1.5;
 }
 
-
 .profile-contents h3{
     display: flex;
     min-width: 45px;
@@ -193,12 +198,18 @@ h2 {
     justify-content: flex-end;
 }
 
+.name{
+    
+    padding: 5px 0px 0px 15px;
+
+}
 #name{
     font-size: 1.9em;
     font-weight: bold;
-    padding: 0px auto;
-    padding-left: 15px;
-    margin-bottom: -0.6rem;
+    margin-bottom: 0;
+    line-height: 1.3;
+    overflow: visible;
+    height: auto;
 }
 #name:focus, #ECT:focus{
     outline: none;
@@ -208,10 +219,12 @@ h2 {
     background: transparent;
     border: none;
     color: var(--unselect-text-color, inherit);
+    opacity: 1;
 }
 
 #name::placeholder, #ECT::placeholder {
-    color: var(--placeholder-color, rgba(102, 102, 102, 0.5));
+    color: var(--placeholder-color, rgb(102, 102, 102));
+    opacity: 0.5;
 }
 
 /* 토글 버튼 */
@@ -317,6 +330,17 @@ h2 {
     flex-direction: column;
     justify-content: flex-end;
 }
+.genre-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 35%);
+    pointer-events: none;
+    z-index: 1;
+}
 
 .genre-img input[type="file"] {
     position: absolute;
@@ -327,8 +351,39 @@ h2 {
     z-index: 1;
 }
 
+/* 장르 삭제 버튼 */
+.genre-img .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    color: #d9534f;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.genre-img:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background-color: #d9534f;
+    color: white;
+}
+
 .genre-info {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    border: none;
     padding: 15px;
     position: relative;
     z-index: 2;
@@ -401,8 +456,9 @@ h2 {
     border-radius: 6px;
     font-size: 14px;
     line-height: 1.5;
-    min-height: 40px;
-    resize: vertical;
+    min-height: 150px;
+    resize: none;
+    overflow: hidden;
 }
 
 /* 컨트롤 섹션 */
@@ -515,7 +571,6 @@ h2 {
 }
 
 
-/* 반응형 */
 @media (max-width: 768px) {
     .profile-section {
         flex-direction: column;
@@ -526,33 +581,37 @@ h2 {
         margin-bottom: 15px;
     }
 
+    .profile-contents {
+        width: 100%;
+        align-items: center;
+    }
+
     .profile-contents > div {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
+        width: 100%;
     }
 
     .profile-contents > div > p {
         min-width: auto;
     }
-    .genre-img {
-        height: 150px;
-        border-radius: 1.5rem;
+    
+    .profile-contents h3 {
+        justify-content: center;
     }
-
-    .genre-info input {
-        margin-bottom: 0px;
-        line-height: 1;
+    
+    .name {
+        padding: 5px 0px 0px 0px;
     }
-
-    .genre-info .genre-title {
-        font-weight: bold;
-        font-size: 14px;
+    
+    #name {
+        text-align: center;
     }
-
-    .genre-info .genre-content {
-        font-size: 10px;
-        opacity: 0.9;
+    
+    .btns {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
-
-
 }
