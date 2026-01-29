@@ -386,6 +386,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // textarea 자동 높이 조절
     const textarea = document.getElementById('ECT');
     if (textarea) {
+        // 초기 높이 설정
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+        
         textarea.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
