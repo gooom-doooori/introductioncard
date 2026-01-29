@@ -200,6 +200,13 @@ h2::after {
     justify-content: flex-end;
 }
 
+h3, label{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}
+
 .name{
     
     padding: 5px 0px 0px 15px;
@@ -232,6 +239,7 @@ h2::after {
 /* 토글 버튼 */
 .unselctbtn {
     padding: 6px 16px;
+    margin-bottom: 2px;
     border: 1px solid var(--unselect-border-color, #ddd);
     border-radius: 20px;
     background-color: #fff;
