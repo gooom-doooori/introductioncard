@@ -156,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const newGenreImg = document.createElement('div');
         newGenreImg.className = 'genre-img';
         newGenreImg.innerHTML = `
+            <span class="upload-placeholder">클릭하여 이미지 업로드</span>
+            <button class="delete-btn">×</button>
             <div class="genre-info">
                 <input type="text" class="genre-title" placeholder="제목" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                 <input type="text" class="genre-content" placeholder="상세설명" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -246,6 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
             targetDiv.style.backgroundImage = `url(${imgData})`;
             targetDiv.style.backgroundSize = 'cover';
             targetDiv.style.backgroundPosition = 'center';
+            targetDiv.classList.add('has-image');
             
             closeCropModal();
         }
@@ -299,6 +302,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const control = document.querySelector('.control');
         const card = document.querySelector('.card');
         control.style.display = 'none';
+
+        // placeholder 임시로 숨기기
+        const placeholders = card.querySelectorAll('.upload-placeholder');
+        placeholders.forEach(p => p.style.display = 'none');
         
         try {
             // card에 50px 패딩 추가
@@ -378,21 +385,25 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('이미지 저장 중 오류:', error);
             alert('이미지 저장 중 오류가 발생했습니다.');
         } finally {
+            // placeholder 복원
+            placeholders.forEach(p => p.style.display = '');
             // control 다시 표시
             control.style.display = 'flex';
         }
     });
 
     // textarea 자동 높이 조절
-    const textarea = document.getElementById('ECT');
-    if (textarea) {
-        // 초기 높이 설정
-        textarea.style.height = 'auto';
-        textarea.style.height = (textarea.scrollHeight) + 'px';
-        
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-    }
+    const textareas = document.querySelectorAll('#ECT, #ng');
+    textareas.forEach(textarea => {
+        if (textarea) {
+            // 초기 높이 설정
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        }
+    });
 });
