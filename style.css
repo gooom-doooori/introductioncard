@@ -697,11 +697,11 @@ h3, label{
     }
 
     .genre-info .genre-title{
-        font-size: 11pt !important;
+        font-size: 10pt !important;
     }
 
     .genre-info .genre-content{
-        font-size: 9pt !important;
+        font-size: 8pt !important;
     }
 
     .genre-info input{
@@ -724,3 +724,4 @@ h3, label{
         flex-wrap: wrap;
     }
 }
+
