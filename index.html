@@ -11,7 +11,7 @@
     <div class="container">
         <div class="card">
             <div class="main-title">
-                <h2>MAIN TWEET</h2>
+                <h2 data-text="MAIN TWEET">MAIN TWEET</h2>
             </div>
             <div class="introductioncard">
                 <div class="profile-section">
@@ -19,7 +19,8 @@
                         <input type="file" id="profile-img" accept="image/*">
                     </div>
                     <div class="profile-contents">
-                        <div class="name"><input type="text" id="name" placeholder="여기에 닉네임 작성" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        <div class="name">
+                            <input type="text" id="name" placeholder="여기에 닉네임 작성" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                         </div>
                         <div class="age">
                             <h3>나이</h3>
@@ -53,6 +54,7 @@
                 </div>
                 <div class="genre-section">
                     <div class="genre-img">
+                        <button class="delete-btn">×</button>
                         <div class="genre-info">
                             <input type="text" class="genre-title" placeholder="제목" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                             <input type="text" class="genre-content" placeholder="상세설명" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
