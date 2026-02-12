@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         newGenreImg.className = 'genre-img';
         newGenreImg.innerHTML = `
             <span class="upload-placeholder">클릭하여 이미지 업로드</span>
+            <button class="add-btn">+</button>
             <button class="delete-btn">×</button>
             <div class="genre-info">
                 <input type="text" class="genre-title" placeholder="제목" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -178,6 +179,14 @@ document.addEventListener('DOMContentLoaded', function() {
             genreCount--;
         }
     });
+
+    // 장르 추가 기능 (+ 버튼)
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('add-btn')) {
+        e.stopPropagation(); // 이미지 업로드 방지
+        addGenreBtn.click(); // 기존 장르 추가 버튼 클릭
+    }
+});
 
     // Cropper.js 라이브러리 로드 함수
     async function loadCropperJS() {
