@@ -440,8 +440,8 @@ h3, label{
 /* 장르 추가 버튼 (호버시 표시) */
 .genre-img .add-btn {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 43%;
+    right: 10px;
     width: 30px;
     height: 30px;
     background-color: rgba(255, 255, 255, 0.9);
