@@ -331,6 +331,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 foreignObjectRendering: false,
                 imageTimeout: 0,
                 onclone: (clonedDoc) => {
+                    // 장르 이미지 배경 고정 (추가!)
+                    const genreImgs = clonedDoc.querySelectorAll('.genre-img');
+                    genreImgs.forEach(img => {
+                        const bgImage = img.style.backgroundImage;
+                        if (bgImage && bgImage !== 'none') {
+                            img.style.backgroundSize = 'cover';
+                            img.style.backgroundPosition = 'center';
+                            img.style.backgroundRepeat = 'no-repeat';
+                        }
+                    });
+                    
                     // 모든 input과 textarea의 값을 div로 변환
                     const inputs = clonedDoc.querySelectorAll('input[type="text"], textarea');
                     inputs.forEach(input => {
