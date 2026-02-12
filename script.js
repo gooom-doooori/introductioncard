@@ -309,6 +309,19 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholders.forEach(p => p.style.display = 'none');
         
         try {
+            // 현재 화면 너비 가져오기
+            const screenWidth = window.innerWidth;
+            let targetWidth;
+            
+            // 화면 크기에 따라 저장 너비 결정
+            if (screenWidth <= 768) {
+                // 모바일: 실제 화면 너비 사용
+                targetWidth = Math.min(screenWidth - 40, 600); // 최대 600px
+            } else {
+                // 데스크톱: 1200px 고정
+                targetWidth = 1200;
+            }
+            
             // card에 50px 패딩 추가
             const wrapper = document.createElement('div');
             wrapper.style.padding = '50px';
