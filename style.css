@@ -437,6 +437,37 @@ h3, label{
     color: white;
 }
 
+/* 장르 추가 버튼 (호버시 표시) */
+.genre-img .add-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    color: #5cb85c;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.genre-img:hover .add-btn {
+    opacity: 1;
+}
+
+.add-btn:hover {
+    background-color: #5cb85c;
+    color: white;
+}
+
 .genre-info {
     border: none;
     padding: 15px;
@@ -724,4 +755,3 @@ h3, label{
         flex-wrap: wrap;
     }
 }
-
