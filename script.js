@@ -317,15 +317,16 @@ document.addEventListener('DOMContentLoaded', function() {
             wrapper.style.backgroundSize = 'cover';
             wrapper.style.backgroundPosition = 'center';
             wrapper.style.display = 'inline-block';
+            wrapper.style.width = '1200px';
             
             const cardClone = card.cloneNode(true);
+            cardClone.style.width = '1100px';
             wrapper.appendChild(cardClone);
             document.body.appendChild(wrapper);
             
             const canvas = await html2canvas(wrapper, {
                 backgroundColor: null,
                 scale: 2,
-                width: 1200,
                 logging: false,
                 useCORS: true,
                 allowTaint: true,
