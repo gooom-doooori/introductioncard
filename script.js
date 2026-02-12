@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let targetWidth;
             
             // 화면 크기에 따라 저장 너비 결정
-            if (screenWidth <= 768) {
+            if (screenWidth <= 900) {
                 // 모바일: 실제 화면 너비 사용
                 targetWidth = Math.min(screenWidth - 40, 600); // 최대 600px
             } else {
